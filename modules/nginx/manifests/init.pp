@@ -61,6 +61,11 @@ class nginx::conf {
     target => '/etc/nginx/sites-available/laravel.dev.ssl'
   }
 
+  file { '/etc/nginx/sites-enabled/ngrok.dev':
+    ensure => 'link',
+    target => '/etc/nginx/sites-available/ngrok.dev'
+  }
+
   file { 'var/www':
     path => '/var/www',
     ensure => directory,
