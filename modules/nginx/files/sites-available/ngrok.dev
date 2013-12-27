@@ -1,7 +1,7 @@
 server {
     listen          80;
     server_name     *.ngrok.com;
-    root            /var/www/yoursite.dev/public;
+    root            /var/www/csp/public;
 
     location / {
     	index       index.html index.htm index.php;
