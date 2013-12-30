@@ -1,7 +1,7 @@
 <?php
 /**
  * Defines the ContentSecurityPolicy and CSPException classes.
- * 
+ *
  * Defines a somewhat simple API for generating a Content
  * Security Policy.
  */
@@ -53,15 +53,21 @@ class ContentSecurityPolicy {
      */
     function __construct() {
         $this->policy = array();
-        $this->policy['default-src'] = array();
-        $this->policy['script-src'] = array();
-        $this->policy['object-src'] = array();
-        $this->policy['style-src'] = array();
-        $this->policy['img-src'] = array();
-        $this->policy['media-src'] = array();
-        $this->policy['frame-src'] = array();
-        $this->policy['font-src'] = array();
-        $this->policy['connect-src'] = array();
+        $this->setPolicySourceDirectives();
+    }
+    
+    /**
+     * Looks for *_SRC constants in this class, and
+     * prepares this policy array for them.
+     */
+    private function setPolicySourceDirectives(){
+        $refl = new \ReflectionClass(__CLASS__);
+        $srcPattern = '/.+_SRC$/';
+        foreach ($refl->getConstants() as $constant => $value){
+            if (preg_match($srcPattern, $constant)){
+                $this->policy[constant(__CLASS__.'::'.$constant)] = array();
+            }
+        }
     }
 
     /**
@@ -80,8 +86,6 @@ class ContentSecurityPolicy {
                 array_push($retval->policy[$directive], $source);
             }
         }
-    
-        return $retval;
     }
 
     /**
@@ -122,6 +126,25 @@ class ContentSecurityPolicy {
         }
         return join('; ', $retval);
     }
+    
+    /**
+     * Magic toString, allows typecasting the object
+     * Now you can do things like:
+     *   $csp = new CSP();
+     *   echo $csp;
+     *   echo (string)$csp;
+     *
+     * @return the stringified class
+     */
+    public function __toString(){
+        $retval = array();
+        foreach ($this->policy as $directive => $sources) {
+        if (sizeof($sources) > 0) {
+                $retval[] = join(' ', array($directive, join(' ', $sources)));
+            }
+        }
+        return join('; ', $retval);
+    }
 }
 
 /**
@@ -131,4 +154,4 @@ class ContentSecurityPolicy {
  */
 class CSPException extends \Exception {}
 
-// vim: et:ts=4:sw=4:sts=4
+// vim: et:ts=4:sw=4:sts=4:cc=80
