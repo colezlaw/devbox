@@ -1,14 +1,14 @@
 <?php
 error_reporting(E_ALL);
-ob_start();
 ini_set('display_errors', '1');
+ob_start();
 require '../vendor/autoload.php';
 use owasp\csp\ContentSecurityPolicy as CSP;
 
 $csp = (new CSP())
-  ->addSource(\owasp\csp\ContentSecurityPolicy::DEFAULT_SRC, \owasp\csp\ContentSecurityPolicy::SOURCE_NONE)
+  ->addSource(CSP::DEFAULT_SRC, CSP::SOURCE_NONE)
   ->addSource('script-src', 'code.jquery.com')
-  ->addSource('script-src', \owasp\csp\ContentSecurityPolicy::SOURCE_UNSAFE_INLINE);
+  ->addSource('script-src', CSP::SOURCE_UNSAFE_INLINE);
 header("Content-Security-Policy: {$csp->toString()}");
 ?>
 <!DOCTYPE html>
