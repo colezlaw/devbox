@@ -117,7 +117,7 @@ class ContentSecurityPolicy {
     $retval = array();
     foreach ($this->policy as $directive => $sources) {
       if (sizeof($sources) > 0) {
-        $retval[] = join(' ', [$directive, join(' ', $sources)]);
+        $retval[] = join(' ', array($directive, join(' ', $sources)));
       }
     }
     return join('; ', $retval);
