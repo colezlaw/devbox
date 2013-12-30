@@ -1,5 +1,6 @@
 # WS added to ignore the Composer dependencies
 www/csp/vendor
+www/csp/output
 
 # Sublime Text 
 *.sublime*

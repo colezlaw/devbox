@@ -1,5 +1,5 @@
 <?php
-use \owasp\ContentSecurityPolicy as CSP;
+use owasp\csp\ContentSecurityPolicy as CSP;
 
 class ContentSecurityPolicyTest extends PHPUnit_Framework_TestCase {
   public function testNew() {
@@ -21,20 +21,20 @@ class ContentSecurityPolicyTest extends PHPUnit_Framework_TestCase {
   }
 
   public function testFluent() {
-    $csp = (new CSP())
-      ->addSource(CSP::DEFAULT_SRC, CSP::SOURCE_NONE)
-      ->addSource(CSP::IMG_SRC, CSP::SOURCE_SELF)
-      ->addSource(CSP::IMG_SRC, 'https://images.google.com');
+    $csp = new CSP();
+    $csp->addSource(\owasp\csp\ContentSecurityPolicy::DEFAULT_SRC, \owasp\csp\ContentSecurityPolicy::SOURCE_NONE)
+       ->addSource(\owasp\csp\ContentSecurityPolicy::IMG_SRC, \owasp\csp\ContentSecurityPolicy::SOURCE_SELF)
+       ->addSource(\owasp\csp\ContentSecurityPolicy::IMG_SRC, 'https://images.google.com');
     $expected = "default-src 'none'; img-src 'self' https://images.google.com";
     $this->assertEquals($expected, $csp->toString());
   }
 
   /**
-   * @expectedException          owasp\CSPException
+   * @expectedException          owasp\csp\CSPException
    * @expectedExceptionMessage   Invalid directive
    */
   public function testInvalidDirective() {
-    $csp = (new CSP())
-      ->addSource("foo-src", CSP::SOURCE_SELF);
+    $csp = new CSP();
+    $csp->addSource("foo-src", CSP::SOURCE_SELF);
   }
 }

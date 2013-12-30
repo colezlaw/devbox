@@ -6,5 +6,9 @@
   },
   "autoload": {
     "psr-0": {"owasp\\": "lib"}
+  },
+  "require": {
+    "phpdocumentor/phpdocumentor": "2.*",
+    "monolog/monolog": "*"
   }
 }
