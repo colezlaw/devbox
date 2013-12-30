@@ -1,7 +1,7 @@
 <?php
 use \owasp\ContentSecurityPolicy as CSP;
 
-class TestContentSecurityPolicy extends PHPUnit_Framework_TestCase {
+class ContentSecurityPolicyTest extends PHPUnit_Framework_TestCase {
   public function testNew() {
     $csp = new CSP();
     $this->assertEquals('', $csp->toString());
