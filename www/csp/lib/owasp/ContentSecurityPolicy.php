@@ -1,4 +1,6 @@
-<?php namespace owasp;
+<?php 
+namespace owasp;
+
 class ContentSecurityPolicy {
   const DEFAULT_SRC = 'default-src';
   const SCRIPT_SRC = 'script-src';
@@ -16,17 +18,20 @@ class ContentSecurityPolicy {
 
   private $policy;
 
-  function __construct() {
+  public function __construct() {
     $this->policy = array();
-    $this->policy['default-src'] = array();
-    $this->policy['script-src'] = array();
-    $this->policy['object-src'] = array();
-    $this->policy['style-src'] = array();
-    $this->policy['img-src'] = array();
-    $this->policy['media-src'] = array();
-    $this->policy['frame-src'] = array();
-    $this->policy['font-src'] = array();
-    $this->policy['connect-src'] = array();
+	$this->setPolicySourceDirectives();
+  }
+
+
+  private function setPolicySourceDirectives(){
+	  $refl = new ReflectionClass(__CLASS__);
+      $srcPattern = '/.+_SRC$/';
+      foreach ($refl->getConstants() as $constant => $value){
+          if (preg_match($srcPattern, $constant)){
+              $this->policy[constant(__CLASS__.'::'.$constant)] = array();
+          }
+      }
   }
 
   private function copy() {
