@@ -120,7 +120,20 @@ class ContentSecurityPolicy {
    * @return string the policy in the form required for the header.
    */
   function toString() {
-    $retval = array();
+    return $this->__toString();
+  }
+
+  /**
+   * Magic toString, allows typecasting the object
+   * Now you can do things like:
+   *   $csp = new CSP();
+   *   echo $csp;
+   *   echo (string)$csp;
+   *
+   * @return the stringified class
+   */
+  public function __toString(){
+  	$retval = array();
     foreach ($this->policy as $directive => $sources) {
       if (sizeof($sources) > 0) {
         $retval[] = join(' ', array($directive, join(' ', $sources)));
@@ -128,6 +141,7 @@ class ContentSecurityPolicy {
     }
     return join('; ', $retval);
   }
+
 }
 
 /**
