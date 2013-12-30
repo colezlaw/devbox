@@ -1,5 +1,5 @@
 <?php
-use \owasp\ContentSecurityPolicy as CSP;
+use \owasp\csp\ContentSecurityPolicy as CSP;
 
 class ContentSecurityPolicyTest extends PHPUnit_Framework_TestCase {
   public function testNew() {
@@ -30,7 +30,7 @@ class ContentSecurityPolicyTest extends PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @expectedException          owasp\CSPException
+   * @expectedException          owasp\csp\CSPException
    * @expectedExceptionMessage   Invalid directive
    */
   public function testInvalidDirective() {
