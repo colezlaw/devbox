@@ -1,7 +1,7 @@
 <?php
 /**
  * Defines the ContentSecurityPolicy and CSPException classes.
- * 
+ *
  * Defines a somewhat simple API for generating a Content
  * Security Policy.
  */
@@ -53,15 +53,21 @@ class ContentSecurityPolicy {
    */
   function __construct() {
     $this->policy = array();
-    $this->policy['default-src'] = array();
-    $this->policy['script-src'] = array();
-    $this->policy['object-src'] = array();
-    $this->policy['style-src'] = array();
-    $this->policy['img-src'] = array();
-    $this->policy['media-src'] = array();
-    $this->policy['frame-src'] = array();
-    $this->policy['font-src'] = array();
-    $this->policy['connect-src'] = array();
+  	$this->setPolicySourceDirectives();
+  }
+
+  /**
+   * Looks for *_SRC constants in this class, and
+   * prepares this policy array for them.
+   */
+  private function setPolicySourceDirectives(){
+	  $refl = new \ReflectionClass(__CLASS__);
+      $srcPattern = '/.+_SRC$/';
+      foreach ($refl->getConstants() as $constant => $value){
+          if (preg_match($srcPattern, $constant)){
+              $this->policy[constant(__CLASS__.'::'.$constant)] = array();
+          }
+      }
   }
 
   /**
@@ -114,7 +120,20 @@ class ContentSecurityPolicy {
    * @return string the policy in the form required for the header.
    */
   function toString() {
-    $retval = array();
+    return $this->__toString();
+  }
+
+  /**
+   * Magic toString, allows typecasting the object
+   * Now you can do things like:
+   *   $csp = new CSP();
+   *   echo $csp;
+   *   echo (string)$csp;
+   *
+   * @return the stringified class
+   */
+  public function __toString(){
+  	$retval = array();
     foreach ($this->policy as $directive => $sources) {
       if (sizeof($sources) > 0) {
         $retval[] = join(' ', array($directive, join(' ', $sources)));
@@ -122,6 +141,7 @@ class ContentSecurityPolicy {
     }
     return join('; ', $retval);
   }
+
 }
 
 /**
