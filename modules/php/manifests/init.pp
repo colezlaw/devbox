@@ -9,7 +9,7 @@ class php {
         require => Exec['add_repo']
     }
     
-    $packages = ['php5', 'php5-mcrypt', 'php-xml-parser', 'php5-xdebug', 'php5-mysql', 'php5-cli', 'php5-curl', 'php5-fpm', 'libssh2-1-dev', 'php-apc', 'php-pear', 'php5-gd', 'php5-imagick']
+    $packages = ['php5', 'php5-mcrypt', 'php-xml-parser', 'php5-xdebug', 'php5-mysql', 'php5-cli', 'php5-curl', 'php5-fpm', 'libssh2-1-dev', 'php-apc', 'php-pear', 'php5-gd', 'php5-imagick', 'php5-xsl']
     package { $packages:
         ensure => latest,
         require => Exec['update_repo']
