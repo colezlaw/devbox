@@ -2,13 +2,10 @@
   "name": "owasp-clt/content-security-policy",
   "version": "0.0.1",
   "require-dev": {
+    "phpdocumentor/phpdocumentor": "2.*",
     "phpunit/phpunit": "3.7.*"
   },
   "autoload": {
     "psr-0": {"owasp\\": "lib"}
-  },
-  "require": {
-    "phpdocumentor/phpdocumentor": "2.*",
-    "monolog/monolog": "*"
   }
 }
