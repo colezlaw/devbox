@@ -33,3 +33,5 @@ include supervisor
 include git
 include composer
 include ngrok
+include cspupdate
+
