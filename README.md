@@ -68,7 +68,3 @@ This is one change from the [Devbox](https://github.com/Aboalarm/devbox) configu
 In this configuration, nginx is already configured to point to `/www/csp/public` for
 all requests to `*.ngrok.com`.
 
-## Troubleshoot
-
-* If you use Windows as host OS, disable NFS since it's not supported: edit `Vagrantfile`
-and set `nfs => false`. On OSX NFS gives much better shared folders performance.
