@@ -8,7 +8,7 @@ class cspupdate {
   
     exec { "composer update":
         cwd       => "/var/www/csp",
-        command   => "/usr/bin/php composer.phar update",
+        command   => "/usr/bin/php composer.phar update --no-dev",
         logoutput => true
     }
 }
